@@ -51,7 +51,7 @@ String pointNadir() {
   return "ADCS_POINT_NADIR=OK|ANGLE=90";
 }
 
-bool isUnsignedInteger(const String &token) {
+bool containsOnlyDigits(const String &token) {
   int tokenLength = token.length();
   if (tokenLength == 0) {
     return false;
@@ -73,7 +73,7 @@ String setAngleCommand(const String &command) {
 
   String angleToken = command.substring(separatorIndex + 1);
   angleToken.trim();
-  if (!isUnsignedInteger(angleToken)) {
+  if (!containsOnlyDigits(angleToken)) {
     return "ERR=BAD_ADCS_SET_ANGLE";
   }
 
