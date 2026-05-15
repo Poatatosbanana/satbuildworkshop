@@ -50,6 +50,19 @@ String pointNadir() {
   return "ADCS_POINT_NADIR=OK|ANGLE=90";
 }
 
+bool isUnsignedInteger(const String &token) {
+  if (token.length() == 0) {
+    return false;
+  }
+
+  for (int i = 0; i < token.length(); i++) {
+    if (!isDigit(token.charAt(i))) {
+      return false;
+    }
+  }
+  return true;
+}
+
 String setAngleCommand(const String &command) {
   int separatorIndex = command.indexOf(':');
   if (separatorIndex < 0) {
@@ -58,7 +71,14 @@ String setAngleCommand(const String &command) {
 
   String angleToken = command.substring(separatorIndex + 1);
   angleToken.trim();
+  if (!isUnsignedInteger(angleToken)) {
+    return "ERR=BAD_ADCS_SET_ANGLE";
+  }
+
   int requestedAngle = angleToken.toInt();
+  if (requestedAngle < 0 || requestedAngle > 180) {
+    return "ERR=BAD_ADCS_SET_ANGLE_RANGE";
+  }
 
   applyPanelAngle(requestedAngle);
   currentMode = "MANUAL";
