@@ -13,6 +13,8 @@ SoftwareSerial adcsBus(ADCS_RX_PIN, ADCS_TX_PIN);
 
 const long LORA_FREQUENCY_HZ = 434E6;
 const unsigned long ADCS_TIMEOUT_MS = 1200;
+const int ADCS_MAX_FLUSH_BYTES = 128;
+const unsigned long ADCS_FLUSH_TIMEOUT_MS = 50;
 
 unsigned long startMillis = 0;
 
@@ -42,7 +44,7 @@ String getElapsedTimeString() {
 String queryADCS(const String &command) {
   unsigned long flushStartedAt = millis();
   int flushedBytes = 0;
-  while (adcsBus.available() && flushedBytes < 128 && (millis() - flushStartedAt) < 50) {
+  while (adcsBus.available() && flushedBytes < ADCS_MAX_FLUSH_BYTES && (millis() - flushStartedAt) < ADCS_FLUSH_TIMEOUT_MS) {
     adcsBus.read();
     flushedBytes++;
   }

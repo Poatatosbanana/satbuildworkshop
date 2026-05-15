@@ -77,7 +77,7 @@ String setAngleCommand(const String &command) {
   }
 
   int requestedAngle = angleToken.toInt();
-  if (requestedAngle < 0 || requestedAngle > 180) {
+  if (requestedAngle > 180) {
     return "ERR=BAD_ADCS_SET_ANGLE_RANGE";
   }
 
