@@ -37,8 +37,8 @@ String pointSun() {
   int diff = sunLeft - sunRight;
 
   int correction = map(constrain(diff, -300, 300), -300, 300, -15, 15);
-  long requestedAngle = (long)panelAngle + correction;
-  applyPanelAngle((int)requestedAngle);
+  int requestedAngle = panelAngle + correction;
+  applyPanelAngle(requestedAngle);
   currentMode = "SUN_TRACK";
 
   return "ADCS_POINT_SUN=OK|ANGLE=" + String(panelAngle);
@@ -51,11 +51,12 @@ String pointNadir() {
 }
 
 bool isUnsignedInteger(const String &token) {
-  if (token.length() == 0) {
+  int tokenLength = token.length();
+  if (tokenLength == 0) {
     return false;
   }
 
-  for (int i = 0; i < token.length(); i++) {
+  for (int i = 0; i < tokenLength; i++) {
     if (!isDigit(token.charAt(i))) {
       return false;
     }
