@@ -25,7 +25,7 @@ float readTempFromPin(const int pin) {
 
 float readBatteryVoltage() {
   float vbatReading = analogRead(PIN_VBAT);
-  return vbatReading * (5.10 / 1023.00);
+  return vbatReading * (5.10 / 1024.00);
 }
 
 String getElapsedTimeString() {

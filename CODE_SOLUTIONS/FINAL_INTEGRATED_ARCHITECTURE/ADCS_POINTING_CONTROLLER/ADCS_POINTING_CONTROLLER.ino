@@ -36,6 +36,7 @@ String pointSun() {
   int sunRight = analogRead(PIN_SUN_SENSOR_RIGHT);
   int diff = sunLeft - sunRight;
 
+  // Clamp large sensor imbalance and map it to a small correction step (max +/-15 deg) per command.
   int correction = map(constrain(diff, -300, 300), -300, 300, -15, 15);
   int requestedAngle = panelAngle + correction;
   applyPanelAngle(requestedAngle);
