@@ -40,8 +40,11 @@ String getElapsedTimeString() {
 }
 
 String queryADCS(const String &command) {
-  while (adcsBus.available()) {
+  unsigned long flushStartedAt = millis();
+  int flushedBytes = 0;
+  while (adcsBus.available() && flushedBytes < 128 && (millis() - flushStartedAt) < 50) {
     adcsBus.read();
+    flushedBytes++;
   }
 
   adcsBus.println(command);

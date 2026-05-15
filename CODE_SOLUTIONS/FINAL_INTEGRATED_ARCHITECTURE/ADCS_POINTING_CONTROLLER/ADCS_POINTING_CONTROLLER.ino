@@ -37,7 +37,8 @@ String pointSun() {
   int diff = sunLeft - sunRight;
 
   int correction = map(constrain(diff, -300, 300), -300, 300, -15, 15);
-  applyPanelAngle(panelAngle + correction);
+  long requestedAngle = (long)panelAngle + correction;
+  applyPanelAngle((int)requestedAngle);
   currentMode = "SUN_TRACK";
 
   return "ADCS_POINT_SUN=OK|ANGLE=" + String(panelAngle);
